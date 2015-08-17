@@ -2,94 +2,125 @@
 <html lang="en">
  
 <head>
-    <title>Python Flask Bucket List App</title>
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/datepicker.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="../static/js/bootstrap-datepicker.js"></script>
-    <script src="../static/js/validator.js"></script>
-    <script type="text/javascript">
-            $(document).ready(function () {
-                $('#inputTargetDate').datepicker({
-                    format: "mm/dd/yyyy"
-                });
-                
-            });
+		<title>Python Flask Bucket List App</title>
+		<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+		<link rel="stylesheet" href="../static/css/datepicker.css">
 
-    </script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type='text/javascript' src='../static/js/knockout-3.3.0.js'></script>
+		<script src="../static/js/bootstrap-datepicker.js"></script>
+		<script src="../static/js/validator.js"></script>
+		<script type="text/javascript">
+						$(document).ready(function () {
+								$('#inputTargetDate').datepicker({
+										format: "mm/dd/yyyy"
+								});
+						});
+		</script>
+
 </head>
  
 <body>
-    <div class="container">
-        <div class="header">
-            <!-- <nav>
-                <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="#">Home</a>
-                    </li>
-                    <li role="presentation"><a href="#">Sign In</a>
-                    </li>
-                </ul>
-            </nav> -->
-            <h3 class="text-muted">{{clientList.name}}</h3>
-        </div>
-        <form id="featureRequestForm" data-toggle="validator" role="form" method="post" action="{{ url_for('submit') }}">
-            <div class="form-group has-feedback">
-                <label for="inputTitle">Title</label>
-                <input type="text" class="form-control" id="inputTitle" name="inputTitle" placeholder="A short, descriptive name of the feature request." required/>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <label for="inputDescription">Description</label>
-                <textarea class="form-control" id="inputDescription" name="inputDescription" rows="5" placeholder="A long description of the feature request." required></textarea>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <label for="inputClient">Client</label>
-                <select class="form-control" id="inputClient" name="inputClient">
-                    <option value="one">One</option>
-                    <option value="two">Two</option>
-                    <option value="three">Three</option>
-                    <option value="four">Four</option>
-                    <option value="five">Five</option>
-                </select>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <label for="inputPriority">Priority</label>
-                <input type="number" class="form-control" id="inputPriority" name="inputPriority" min="0" step="1" data-bind="value:inputPriority" required/>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <label for="inputTargetDate">Target Date</label>
-                <input type="text" class="form-control" id="inputTargetDate" name="inputTargetDate" placeholder="The date that the client is hoping to have the feature." bootstrap-datepicker data-date-start-date="0d" data-date-orientation="auto" required/>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            </div>
-            <div class="form-group">
-                <label for="inputTicketUrl">Ticket URL</label>
-                <input type="text" class="form-control" id="inputTicketUrl" name="inputTicketUrl" placeholder="">
-                
-            </div>
-            <div class="form-group has-feedback">
-                <label for="inputProductArea">Product Area</label>
-                <select class="form-control" id="inputProductArea" name="inputProductArea">
-                    <option value="one">Policies</option>
-                    <option value="two">Billing</option>
-                    <option value="three">Claims</option>
-                    <option value="four">Reports</option>
-                </select>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            </div>
+	<div class="container-fluid">
+		<div class="header">
+			<!-- <nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation" class="active"><a href="#">Home</a>
+				</li>
+				<li role="presentation"><a href="#">Sign In</a>
+				</li>
+			</ul>
+			</nav> -->
+			<h3 class="text-muted">Feature</h3>
+		</div>
+		<form id="featureRequestForm" data-toggle="validator" role="form" method="post" action="{{ url_for('submit') }}">
+		<div class="col-md-8">
+						<div class="form-group has-feedback">
+								<label for="inputTitle">Title</label>
+								<input data-bind="value: title" type="text" class="form-control" id="inputTitle" name="inputTitle" placeholder="A short, descriptive name of the feature request." required/>
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
 
-            <button type="submit" class="btn btn-primary" id="btnSubmit" />Submit</button>
-        </form>
+						<div class="form-group has-feedback">
+								<label for="inputDescription">Description</label>
+								<textarea data-bind="value: description" class="form-control" id="inputDescription" name="inputDescription" rows="5" placeholder="A long description of the feature request." required></textarea>
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
 
- 
-        <footer class="footer">
-            <p>&copy; Company 2015</p>
-        </footer>
- 
-    </div>
+						<div class="form-group has-feedback">
+								<label for="inputClient">Client</label>
+								<select data-bind="value: client, options: clientOptions" class="form-control" id="inputClient" name="inputClient">
+										<!-- <option value="Client A">Client A</option>
+										<option value="Client B">Client B</option>
+										<option value="Client C">Client C</option> -->
+								</select>
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
+
+						<div class="form-group has-feedback">
+								<label for="inputPriority">Priority</label>
+								<input data-bind="value: priority" type="number" class="form-control" id="inputPriority" name="inputPriority" min="0" step="1" data-bind="value:inputPriority" required/>
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
+
+						<div class="form-group has-feedback">
+								<label for="inputTargetDate">Target Date</label>
+								<input data-bind="value: targetDate" type="text" class="form-control" id="inputTargetDate" name="inputTargetDate" placeholder="The date that the client is hoping to have the feature." bootstrap-datepicker data-date-start-date="0d" data-date-orientation="auto" required/>
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
+						<div class="form-group">
+								<label for="inputTicketUrl">Ticket URL</label>
+								<input data-bind="value: ticketUrl" type="text" class="form-control" id="inputTicketUrl" name="inputTicketUrl" placeholder="">
+								
+						</div>
+						<div class="form-group has-feedback">
+								<label for="inputProductArea">Product Area</label>
+								<select data-bind="value: productArea, options: productAreaOptions" class="form-control" id="inputProductArea" name="inputProductArea">
+										<!-- <option value="Policies">Policies</option>
+										<option value="Billing">Billing</option>
+										<option value="Claims">Claims</option>
+										<option value="Reports">Reports</option> -->
+								</select>
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+						</div>
+						
+		</div>
+
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">Preview</div>
+				<div class="panel-body">
+					<p>Title: <span data-bind="text: title"></span></p>
+					<p>Description: <span data-bind="text: description"></span></p>
+					<p>Client: <span data-bind="text: client"></span></p>
+					<p>Priority: <span data-bind="text: priority"></span></p>
+					<p>Target Date: <span data-bind="text: targetDate"></span></p>
+					<p>Ticket URL: <span data-bind="text: ticketUrl"></span></p>
+					<p>Product Area: <span data-bind="text: productArea"></span></p>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary center-block" id="btnSubmit" />Submit</button>
+		</div>
+
+			<!-- <footer class="footer">
+					<p>&copy; Company 2015</p>
+			</footer> -->
+	</form>
+	</div>
 </body>
- 
+<script type="text/javascript">
+	var viewModel = {
+		title : ko.observable(''),
+		description : ko.observable(''),
+		client: ko.observable(''),
+		clientOptions: ko.observableArray(['Client A', 'Client B', 'Client C']),
+		priority: ko.observable(''),
+		targetDate: ko.observable(''),
+		ticketUrl: ko.observable(''),
+		productArea: ko.observable(''),
+		productAreaOptions: ko.observableArray(['Policies', 'Billing', 'Claims', 'Reports'])
+	};
+	ko.applyBindings(viewModel);
+</script>
 </html>

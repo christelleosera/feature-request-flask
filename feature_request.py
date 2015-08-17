@@ -9,7 +9,6 @@ db = client.feature_request
 clientList = list(db.client.find({}, {'name': 1, '_id': 0}))
 
 
-
 @app.route("/")
 def main():
 	return render_template('index.html', clientList=clientList)

@@ -1,0 +1,76 @@
+-- ---
+-- Globals
+-- ---
+
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET FOREIGN_KEY_CHECKS=0;
+
+-- ---
+-- Table 'client'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `client`;
+    
+CREATE TABLE `client` (
+  `id` INTEGER AUTO_INCREMENT,
+  `name` VARCHAR(50),
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'product_area'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `product_area`;
+    
+CREATE TABLE `product_area` (
+  `id` INTEGER AUTO_INCREMENT,
+  `name` VARCHAR(50),
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Table 'feature'
+-- 
+-- ---
+
+DROP TABLE IF EXISTS `feature`;
+    
+CREATE TABLE `feature` (
+  `id` INTEGER AUTO_INCREMENT,
+  `description` MEDIUMTEXT,
+  `id_client` INTEGER,
+  `priority` INTEGER,
+  `target_date` DATE,
+  `ticket_url` MEDIUMTEXT,
+  `id_product_area` INTEGER,
+  PRIMARY KEY (`id`)
+);
+
+-- ---
+-- Foreign Keys 
+-- ---
+
+ALTER TABLE `feature` ADD FOREIGN KEY (id_client) REFERENCES `client` (`id`);
+ALTER TABLE `feature` ADD FOREIGN KEY (id_product_area) REFERENCES `product_area` (`id`);
+
+-- ---
+-- Table Properties
+-- ---
+
+-- ALTER TABLE `client` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `product_area` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `feature` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ---
+-- Test Data
+-- ---
+
+-- INSERT INTO `client` (`id`,`name`) VALUES
+-- ('','');
+-- INSERT INTO `product_area` (`id`,`name`) VALUES
+-- ('','');
+-- INSERT INTO `feature` (`id`,`description`,`id_client`,`priority`,`target_date`,`ticket_url`,`id_product_area`) VALUES
+-- ('','','','','','','');

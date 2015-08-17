@@ -1,0 +1,8 @@
+INSERT INTO `client` (`id`,`name`) VALUES (1,'Client A');
+INSERT INTO `client` (`id`,`name`) VALUES (2,'Client B');
+INSERT INTO `client` (`id`,`name`) VALUES (3,'Client C');
+
+INSERT INTO `product_area` (`id`,`name`) VALUES (1,'Policies');
+INSERT INTO `product_area` (`id`,`name`) VALUES (2,'Billing');
+INSERT INTO `product_area` (`id`,`name`) VALUES (3,'Claims');
+INSERT INTO `product_area` (`id`,`name`) VALUES (4,'Reports');
