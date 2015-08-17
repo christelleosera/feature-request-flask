@@ -1,17 +1,26 @@
 from flask import Flask, render_template, json, request
-from pymongo import MongoClient
+from flask.ext.mysql import MySQL
 
 app = Flask(__name__)
 
+mysql = MySQL()
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_DB'] = 'feature_request'
+mysql.init_app(app)
 
-client = MongoClient()
-db = client.feature_request
-clientList = list(db.client.find({}, {'name': 1, '_id': 0}))
+conn = mysql.connect()
+cursor = conn.cursor()
 
+query = ("SELECT name FROM client")
+cursor.execute(query)
+
+names = [item[0] for item in cursor.fetchall()]
+
+print names
 
 @app.route("/")
 def main():
-	return render_template('index.html', clientList=clientList)
+	return render_template('index.html', clientList=names)
 
 @app.route('/submit',methods=['POST'])
 def submit():
