@@ -2,22 +2,25 @@
 <html lang="en">
  
 <head>
-		<title>Python Flask Bucket List App</title>
-		<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+		<title>Feature Request</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><!-- 
+		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
 		<link rel="stylesheet" href="../static/css/datepicker.css">
 
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script type='text/javascript' src='../static/js/knockout-3.3.0.js'></script>
 		<script src="../static/js/bootstrap-datepicker.js"></script>
 		<script src="../static/js/validator.js"></script>
 		<script type="text/javascript">
 						$(document).ready(function () {
 								$('#inputTargetDate').datepicker({
-										format: "mm/dd/yyyy"
+										format: "yyyy-mm-dd"
 								});
 						});
 		</script>
+
 
 </head>
  
@@ -33,7 +36,9 @@
 			</ul>
 			</nav> -->
 			<h3 class="text-muted">Feature </h3>
-			{{clientList[0]}}
+			{% for client in clientList %}
+				{{client}}
+			{% endfor %}
 		</div>
 		<form id="featureRequestForm" data-toggle="validator" role="form" method="post" action="{{ url_for('submit') }}">
 		<div class="col-md-8">
@@ -61,8 +66,12 @@
 
 						<div class="form-group has-feedback">
 								<label for="inputPriority">Priority</label>
-								<input data-bind="value: priority" type="number" class="form-control" id="inputPriority" name="inputPriority" min="0" step="1" data-bind="value:inputPriority" required/>
+								<input data-bind="value: priority" type="number" class="form-control" id="inputPriority" name="inputPriority" min="1" step="1" data-bind="value:inputPriority" required/>
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+
+								<div class="alert alert-warning" role="alert" id="priorityConflict" style="display: none;"></div>
+								
+								
 						</div>
 
 						<div class="form-group has-feedback">
@@ -72,7 +81,7 @@
 						</div>
 						<div class="form-group">
 								<label for="inputTicketUrl">Ticket URL</label>
-								<input data-bind="value: ticketUrl" type="text" class="form-control" id="inputTicketUrl" name="inputTicketUrl" placeholder="">
+								<input data-bind="value: ticketUrl" type="text" class="form-control" id="inputTicketUrl" name="inputTicketUrl" placeholder="" type="url">
 								
 						</div>
 						<div class="form-group has-feedback">
@@ -104,6 +113,13 @@
 			<button type="submit" class="btn btn-primary center-block" id="btnSubmit" />Submit</button>
 		</div>
 
+		<div class="popover left static-popover" id="testPopover">
+    <div class="arrow"></div>
+    <h3 class="popover-title">Popover left</h3>
+    <div class="popover-content">
+        <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+    </div>
+</div>
 			<!-- <footer class="footer">
 					<p>&copy; Company 2015</p>
 			</footer> -->
@@ -123,5 +139,23 @@
 		productAreaOptions: ko.observableArray(['Policies', 'Billing', 'Claims', 'Reports'])
 	};
 	ko.applyBindings(viewModel);
+</script>
+<script type="text/javascript">
+	$('#inputPriority').on('change', function() {
+	    $.ajax({
+	    	url: '/check',
+	    	data: $('form').serialize(),
+	    	type: 'POST',
+	    	success: function(response) {
+	    		if(JSON.parse(response)['exists'] > 0){
+	    			$('#priorityConflict').html("This client already has a feature request <strong>(" + JSON.parse(response)['title']+ ")</strong> with this priority. Submitting this would mean <strong>"+ JSON.parse(response)['title']+ "</strong> and other affected feature requests will be reordered.")
+	    			$('#priorityConflict').show()
+	    		}
+	    		else {
+	    			$('#priorityConflict').hide()
+	    		}
+	    	}
+	    })
+	});
 </script>
 </html>

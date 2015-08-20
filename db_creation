@@ -40,6 +40,7 @@ DROP TABLE IF EXISTS `feature`;
     
 CREATE TABLE `feature` (
   `id` INTEGER AUTO_INCREMENT,
+  `title` VARCHAR(64),
   `description` MEDIUMTEXT,
   `id_client` INTEGER,
   `priority` INTEGER,
