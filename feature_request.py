@@ -1,8 +1,14 @@
-from flask import Flask, render_template, json, request
+from flask import Flask, render_template, json, request, redirect, url_for
 from flask.ext.mysql import MySQL
+from flask.ext.basicauth import BasicAuth
 import datetime
 
 app = Flask(__name__)
+
+app.config['BASIC_AUTH_USERNAME'] = 'admin'
+app.config['BASIC_AUTH_PASSWORD'] = 'bg2Twed5UWYS2&$w'
+
+basic_auth = BasicAuth(app)
 
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -13,6 +19,7 @@ mysql.init_app(app)
 # cursor = conn.cursor()
 
 @app.route("/")
+@basic_auth.required
 def main():
 	# query = ("SELECT name FROM client")
 	# cursor.execute(query)
@@ -50,11 +57,23 @@ def check():
 		conn.close()
 		return json.dumps({'exists': '0'})
 
+@app.route('/requests')
+def requests():
+	conn = mysql.connect()
+	cursor = conn.cursor()
+
+	cursor.execute("SELECT feature.*, client.name, product_area.name FROM feature, client, product_area WHERE feature.id_client = client.id AND product_area.id = feature.id_product_area ORDER BY feature.target_date, feature.id_client, feature.priority")
+	features = cursor.fetchall()
+
+	conn.commit()
+	cursor.close()
+	conn.close()
+	return render_template('requests.html', features=features)
+
 @app.route('/submit',methods=['POST'])
 def submit():
 	conn = mysql.connect()
 	cursor = conn.cursor()
-	cursorf = conn.cursor()
 
 	# read the posted values from the UI
 	title = request.form['inputTitle']
@@ -75,34 +94,29 @@ def submit():
 
 
 
-	query = "INSERT INTO `feature` (`title`, `description`, `id_client`, `priority`, `target_date`, `ticket_url`, `id_product_area`) VALUES ('%s', '%s', %s, %s, '%s', '%s', %s);" % (title, description, clientID, priority, targetDate, ticketUrl, productArea)
-	ok = cursor.execute(query)
+	query = "INSERT INTO `feature` (`title`, `description`, `id_client`, `priority`, `target_date`, `ticket_url`, `id_product_area`) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+	ok = cursor.execute(query, (title, description, clientID, priority, targetDate, ticketUrl, productArea))
 
-	query = "SELECT title from feature where priority=%s and id_client=%s" % (priority, clientID)
-	qcount = cursor.execute(query)
+	query = "SELECT title from feature where priority=%s and id_client=%s"
+	qcount = cursor.execute(query, (priority, clientID))
 	
 	prior = int(priority)
-	print "qqq", qcount
 
 	if(qcount > 1):
 		while (qcount > 1):
-			query_qcount = "SELECT id from feature where priority=%s and id_client=%d order by priority, id" % (prior, clientID)
-			print query_qcount
-			qcount = cursor.execute(query_qcount)
-			print "qqq", qcount
+			query_qcount = "SELECT id from feature where priority=%s and id_client=%s order by priority, last_modified, id"
+			qcount = cursor.execute(query_qcount, (prior, clientID))
 			if(qcount > 1):
-				# print cursor.fetchall()[0][0]
-				query = "UPDATE feature set priority=priority+1 where id=%s" % (cursor.fetchall()[0][0])
-				print query, "*"
-				cursorf.execute(query)
+				query = "UPDATE feature set priority=priority+1 where id=%s"
+				cursor.execute(query, (cursor.fetchall()[0][0],))
 				
 				prior += 1
-
+	
 
 	conn.commit()
 	cursor.close()
 	conn.close()
-	return render_template('submit.html', title=title, description=description, client=client, priority=priority, targetDate=targetDate, ticketUrl=ticketUrl, productArea=productArea)
+	return redirect(url_for('requests'))
 
 
 if __name__ == "__main__":

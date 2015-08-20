@@ -2,11 +2,10 @@
 <html lang="en">
  
 <head>
-		<title>Feature Request</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"><!-- 
-		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+		<title>Feature Request Form</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="../static/css/datepicker.css">
-
+		<link rel="stylesheet" href="../static/css/styles.css">
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -27,18 +26,7 @@
 <body>
 	<div class="container-fluid">
 		<div class="header">
-			<!-- <nav>
-			<ul class="nav nav-pills pull-right">
-				<li role="presentation" class="active"><a href="#">Home</a>
-				</li>
-				<li role="presentation"><a href="#">Sign In</a>
-				</li>
-			</ul>
-			</nav> -->
-			<h3 class="text-muted">Feature </h3>
-			{% for client in clientList %}
-				{{client}}
-			{% endfor %}
+			<h3 class="text-muted">Feature Request Form</h3>
 		</div>
 		<form id="featureRequestForm" data-toggle="validator" role="form" method="post" action="{{ url_for('submit') }}">
 		<div class="col-md-8">
@@ -99,26 +87,21 @@
 
 		<div class="col-md-4">
 			<div class="panel panel-default">
-				<div class="panel-heading">Preview</div>
+				<div class="panel-heading">
+					<h4 class="panel-title">PREVIEW</h4>
+				</div>
 				<div class="panel-body">
-					<p>Title: <span data-bind="text: title"></span></p>
-					<p>Description: <span data-bind="text: description"></span></p>
-					<p>Client: <span data-bind="text: client"></span></p>
-					<p>Priority: <span data-bind="text: priority"></span></p>
-					<p>Target Date: <span data-bind="text: targetDate"></span></p>
-					<p>Ticket URL: <span data-bind="text: ticketUrl"></span></p>
-					<p>Product Area: <span data-bind="text: productArea"></span></p>
+					<p><strong>Title: </strong><span data-bind="text: title"></span></p>
+					<p><strong>Description: </strong><span data-bind="text: description"></span></p>
+					<p><strong>Client: </strong><span data-bind="text: client"></span></p>
+					<p><strong>Priority: </strong><span data-bind="text: priority"></span></p>
+					<p><strong>Target Date: </strong><span data-bind="text: targetDate"></span></p>
+					<p id="outputTicketUrl"><strong>Ticket URL: </strong><span data-bind="text: ticketUrl"></span></p>
+					<p><strong>Product Area: </strong><span data-bind="text: productArea"></span></p>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary center-block" id="btnSubmit" />Submit</button>
 		</div>
-
-		<div class="popover left static-popover" id="testPopover">
-    <div class="arrow"></div>
-    <h3 class="popover-title">Popover left</h3>
-    <div class="popover-content">
-        <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
-    </div>
 </div>
 			<!-- <footer class="footer">
 					<p>&copy; Company 2015</p>

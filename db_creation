@@ -47,6 +47,7 @@ CREATE TABLE `feature` (
   `target_date` DATE,
   `ticket_url` MEDIUMTEXT,
   `id_product_area` INTEGER,
+  `last_modified` DATETIME ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
@@ -65,13 +66,11 @@ ALTER TABLE `feature` ADD FOREIGN KEY (id_product_area) REFERENCES `product_area
 -- ALTER TABLE `product_area` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 -- ALTER TABLE `feature` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ---
--- Test Data
--- ---
+INSERT INTO `client` (`id`,`name`) VALUES (1,'Client A');
+INSERT INTO `client` (`id`,`name`) VALUES (2,'Client B');
+INSERT INTO `client` (`id`,`name`) VALUES (3,'Client C');
 
--- INSERT INTO `client` (`id`,`name`) VALUES
--- ('','');
--- INSERT INTO `product_area` (`id`,`name`) VALUES
--- ('','');
--- INSERT INTO `feature` (`id`,`description`,`id_client`,`priority`,`target_date`,`ticket_url`,`id_product_area`) VALUES
--- ('','','','','','','');
+INSERT INTO `product_area` (`id`,`name`) VALUES (1,'Policies');
+INSERT INTO `product_area` (`id`,`name`) VALUES (2,'Billing');
+INSERT INTO `product_area` (`id`,`name`) VALUES (3,'Claims');
+INSERT INTO `product_area` (`id`,`name`) VALUES (4,'Reports');

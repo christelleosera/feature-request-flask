@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Feature Requests</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+</head>
+ 
+<body>
+    <div class="container-fluid">
+        <div class="header">
+            <h1>Feature Requests</h1>
+        </div>
+        
+        {%for feature in features %}
+        <div class="col-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{feature[1]}}
+
+                    {% if feature[7]==1 %}
+                        <span class="label label-success">
+                    {% endif %}
+                    {% if feature[7]==2 %}
+                        <span class="label label-info">
+                    {% endif %}
+                    {% if feature[7]==3 %}
+                        <span class="label label-warning">
+                    {% endif %}
+                    {% if feature[7]==4 %}
+                        <span class="label label-danger">
+                    {% endif %}
+                        {{feature[10]}}</span>
+                    <span class="badge pull-right">{{feature[4]}}</span></h3>
+                    
+                </div>
+                <div class="panel-body">
+                <p><strong>Client: </strong>{{feature[9]}}</p>
+                <p><strong>Description: </strong>{{feature[2]}}</p>
+                <p><strong>Target Date: </strong>{{feature[5]}}</p>
+                {% if feature[6] %}
+                <a target="_blank" href={{feature[6]}}><span class="pull-right glyphicon glyphicon-link"></span></a>
+                {% endif %}
+                </div>
+            </div>
+         </div>
+        {% endfor %}
+       
+        
+        <!-- <button type="button" class="btn btn-default pull-right"> -->
+            <a class="btn pull-right" href="/"><span class="glyphicon glyphicon-plus"></span> Add a feature request</a>
+        <!-- </button> -->
+ 
+    </div>
+</body>
+ 
+</html>
