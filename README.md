@@ -3,14 +3,14 @@
 A web application built on Flask that takes user input to add feature requests to the database.
 
 ##Tech Used
-1. [Python Flask] (http://flask.pocoo.org/)
+1. [Python Flask](http://flask.pocoo.org/)
 2. MySQL
 3. HTML/CSS
-4. [Bootstrap] (http://getbootstrap.com/)
-5. [Bootstrap Validator] (http://1000hz.github.io/bootstrap-validator/)
+4. [Bootstrap](http://getbootstrap.com/)
+5. [Bootstrap Validator](http://1000hz.github.io/bootstrap-validator/)
 6. [Bootstrap Datepicker](https://github.com/eternicode/bootstrap-datepicker/)
-7. [Flask BasicAuth] (https://github.com/jpvanhal/flask-basicauth)
-8. [KnockoutJS] (https://github.com/knockout/knockout)
+7. [Flask BasicAuth](https://github.com/jpvanhal/flask-basicauth)
+8. [KnockoutJS](https://github.com/knockout/knockout)
 
 ##Setup
 To use on your local machine:
