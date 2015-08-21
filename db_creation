@@ -1,15 +1,3 @@
--- ---
--- Globals
--- ---
-
--- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
--- SET FOREIGN_KEY_CHECKS=0;
-
--- ---
--- Table 'client'
--- 
--- ---
-
 DROP TABLE IF EXISTS `client`;
     
 CREATE TABLE `client` (
@@ -18,11 +6,6 @@ CREATE TABLE `client` (
   PRIMARY KEY (`id`)
 );
 
--- ---
--- Table 'product_area'
--- 
--- ---
-
 DROP TABLE IF EXISTS `product_area`;
     
 CREATE TABLE `product_area` (
@@ -30,11 +13,6 @@ CREATE TABLE `product_area` (
   `name` VARCHAR(50),
   PRIMARY KEY (`id`)
 );
-
--- ---
--- Table 'feature'
--- 
--- ---
 
 DROP TABLE IF EXISTS `feature`;
     
@@ -51,20 +29,8 @@ CREATE TABLE `feature` (
   PRIMARY KEY (`id`)
 );
 
--- ---
--- Foreign Keys 
--- ---
-
 ALTER TABLE `feature` ADD FOREIGN KEY (id_client) REFERENCES `client` (`id`);
 ALTER TABLE `feature` ADD FOREIGN KEY (id_product_area) REFERENCES `product_area` (`id`);
-
--- ---
--- Table Properties
--- ---
-
--- ALTER TABLE `client` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `product_area` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `feature` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `client` (`id`,`name`) VALUES (1,'Client A');
 INSERT INTO `client` (`id`,`name`) VALUES (2,'Client B');
