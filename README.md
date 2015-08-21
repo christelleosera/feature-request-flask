@@ -15,17 +15,12 @@ A web application built on Flask that takes user input to add feature requests t
 ##Setup
 To use on your local machine:
 1. Install Python2.7 and pip
-2. Install Flask
-	`pip install Flask`
+2. Install Flask `pip install Flask`
 3. Install MySQL
-4. Run SQL script for database creation
-	`mysql < db_creation`
-5. Install flask-mysql
-	`pip install flask-mysql`
-6. Install Flask-BasicAuth
-	`pip install Flask-BasicAuth`
-7. Run the app
-	`python app.py`
+4. Run SQL script for database creation `mysql < db_creation`
+5. Install flask-mysql `pip install flask-mysql`
+6. Install Flask-BasicAuth `pip install Flask-BasicAuth`
+7. Run the app `python app.py`
 8. App requires authentication. Username and password can be viewed and changed at the app.py file.
 
 ##Hosted
