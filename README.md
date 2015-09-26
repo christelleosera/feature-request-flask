@@ -23,6 +23,3 @@ To use on your local machine:
 6. Install Flask-BasicAuth `pip install Flask-BasicAuth`
 7. Run the app `python app.py`
 8. App requires authentication. Username and password can be viewed and changed at the app.py file.
-
-##Hosted
-To demo, this web app is also hosted [here](http://ec2-52-24-193-7.us-west-2.compute.amazonaws.com/).
